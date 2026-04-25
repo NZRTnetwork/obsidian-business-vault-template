@@ -9,47 +9,42 @@ Most Obsidian users start with a flat folder of notes and end up with chaos. Thi
 - A consistent **frontmatter schema** so every note is queryable and filterable
 - A **service code system** that tags notes to the business system they belong to
 - A **role code system** that assigns ownership of every note
-- A **MOC (Map of Content) pattern** so navigation never breaks as the vault grows
 - A **HOME.md convention** — every folder has an index note
+- A **MOC (Map of Content) pattern** so navigation never breaks as the vault grows
 - **Wikilink conventions** — full path + display text, always
-
-## Who This Is For
-
-- Solo operators running multiple systems (CRM, ERP, wiki, project mgmt)
-- Small remote teams who need a shared knowledge base
-- Anyone using Obsidian for business documentation, not just personal notes
-- Claude Code users who want their vault to work with AI agents
+- **Claude Code ready** — `CLAUDE.md` at root so AI agents understand your vault
 
 ## What's Included
 
 ```
 obsidian-business-vault-template/
-├── CLAUDE.md                    # AI agent instructions for this vault
-├── HOME.md                      # Master vault index (copy of template)
-├── schema.md                    # Frontmatter schema, codes, conventions
-├── Templates/
-│   ├── New Note.md              # Default note template
-│   ├── Project.md               # Project tracking template
-│   ├── Meeting.md               # Meeting notes template
-│   ├── SOP.md                   # Standard operating procedure template
-│   └── System Reference.md      # Technical system reference template
-├── Example Structure/
-│   ├── HOME.md                  # Example domain HOME (MOC)
-│   ├── 01 - Overview/
-│   │   └── Overview.md
-│   └── 02 - Reference/
-│       └── Reference.md
-└── .obsidian/
-    └── (minimal config — snippets, templates path)
+├── .gitignore                        # Excludes Obsidian workspace/cache, credentials
+├── CLAUDE.md                         # AI agent instructions — fill in your org details
+├── HOME.md                           # Master vault index
+├── schema.md                         # Frontmatter schema, codes, conventions
+├── 00 - Inbox/
+│   └── HOME.md                       # Capture zone — process and file regularly
+├── 01 - Example Domain/              # Shows the domain + HOME.md + note pattern
+│   ├── HOME.md                       # Domain index (MOC)
+│   ├── Example Guide.md              # Guide note type example
+│   └── Example Reference.md         # Reference note type example
+└── Templates/
+    ├── New Note.md                   # Default blank note
+    ├── Meeting.md                    # Meeting notes with agenda, decisions, actions
+    ├── SOP.md                        # Standard operating procedure
+    ├── Project.md                    # Project with goal, scope, plan, decisions
+    ├── Reference.md                  # Quick reference table + detail
+    └── ADR.md                        # Architecture Decision Record
 ```
 
 ## Quick Start
 
-1. Download or clone this repo
+1. Clone or download this repo
 2. Open the folder as a new Obsidian vault (`Open folder as vault`)
 3. Read `schema.md` — understand the frontmatter conventions before creating notes
-4. Copy your domain folders into the structure (Dolibarr/, GitHub/, Nextcloud/, etc.)
+4. Rename `01 - Example Domain/` to your first real domain (e.g. `01 - Infrastructure/`)
 5. Update `HOME.md` with your vault map
+6. Fill in `CLAUDE.md` with your org details if using Claude Code
 
 ## The Schema (Frontmatter)
 
@@ -58,7 +53,7 @@ Every note should have this frontmatter:
 ```yaml
 ---
 tags: [<domain-tag>, <org-tag>, <service-code>, <note-type>]
-aliases: [Human readable name, Alternative name]
+aliases: [Human readable name]
 role: <role-code>        # who owns/maintains this note
 created: YYYY-MM-DD
 status: draft|review|active|complete|archived
@@ -68,9 +63,11 @@ related:
 ---
 ```
 
+Full spec in `schema.md`.
+
 ## Service Code System
 
-Assign one service code per note as a tag. This lets you filter all notes related to a system:
+One service code per note — tags the note to the system it belongs to:
 
 | Code | System |
 |------|--------|
@@ -83,11 +80,11 @@ Assign one service code per note as a tag. This lets you filter all notes relate
 | `000INF` | Infrastructure |
 | `000K8S` | Kubernetes |
 
-Add your own codes for your systems — keep them 6 characters, uppercase.
+Add your own — 6 characters, uppercase, prefix `000`.
 
 ## Role Code System
 
-Assign ownership of every note:
+Every note has an owner:
 
 | Code | Who |
 |------|-----|
@@ -95,34 +92,25 @@ Assign ownership of every note:
 | `pam` | Marketing |
 | `cas` | Sales / CRM |
 | `fin` | Finance |
-| `han` | HR |
-| `ema` | Documents / EDM |
-| `dai` | Analytics |
 | `dan` | DBA / infra |
 
-Rename these to match your team. The pattern is what matters, not the specific codes.
+Rename to match your team. Pattern matters, not the specific codes.
 
-## Wikilink Convention
+## Key Conventions
 
-Always use full path from vault root + display text:
+**HOME.md** — every folder gets one. Type: `MOC`. Links to every note in the folder. Navigate by HOME.md, not by search.
 
+**Wikilinks** — always full path from vault root + display text:
 ```
 [[Domain/Subfolder/Note Name|Human Readable Title]]
 ```
+Never bare `[[Note Name]]` — breaks when files move.
 
-Never use bare `[[Note Name]]` — breaks when files move.
-
-## HOME.md Convention
-
-Every folder gets a `HOME.md` — the index for that domain. Type: `MOC`. Links to every note in the folder. This is how you navigate without relying on search.
-
-## Works With Claude Code
-
-Include a `CLAUDE.md` at vault root to give AI agents context about your vault structure. The included `CLAUDE.md` is a template — fill in your own org details.
+**Folder naming** — `Title Case` or `NN - Title Case` for numbered sections.
 
 ## Real-World Usage
 
-This template is extracted from [NZRT Network](https://nzrtnetwork.com)'s production vault — a 9-agent AI virtual organisation running Dolibarr ERP, Nextcloud, and WordPress, all documented in this structure.
+This template is extracted from [NZRT Network](https://nzrtnetwork.com)'s production vault — a 9-agent AI virtual organisation running Dolibarr ERP, Nextcloud, and WordPress, documented in this structure. See also: [claude-code-multi-agent-setup](https://github.com/NZRTnetwork/claude-code-multi-agent-setup).
 
 ## License
 
